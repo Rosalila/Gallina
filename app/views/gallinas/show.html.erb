@@ -18,6 +18,7 @@
   <br>
   <%= agreement.statement %>
   <br>
+  <br>
   <% agreement.user_agreements.each do |user_agreement| %>
     <%=user_agreement.user.email%>
     <% if user_agreement.accepted==true %>
@@ -30,7 +31,7 @@
   <% end %>
   <br>
   <br>
-  <a href="/home/accept_agreement?agreement_id=<%=agreement.id%>&accepted=true">Accepet</a>
+  <a href="/home/accept_agreement?agreement_id=<%=agreement.id%>&accepted=true">Accept</a>
   <a href="/home/accept_agreement?agreement_id=<%=agreement.id%>&accepted=false">Reject</a>
   <br>
 <% end %>
@@ -67,6 +68,14 @@
     <% metric.questions.each do |question| %>
       <li>
         <%= question.sentence %>
+        <ul>
+          <li>
+            <%= question.wanted_statement %>
+          </li>
+          <li>
+            <%= question.not_wanted_statement %>
+          </li>
+        </ul>
       </li>
     <% end %>
   </ul>
@@ -79,6 +88,14 @@
     <div class="field">
       <%= f.label :sentence %><br>
       <%= f.text_field :sentence %>
+    </div>
+    <div class="field">
+      <%= f.label :wanted_statement %><br>
+      <%= f.text_field :wanted_statement %>
+    </div>
+    <div class="field">
+      <%= f.label :not_wanted_statement %><br>
+      <%= f.text_field :not_wanted_statement %>
     </div>
     <div class="actions">
       <%= f.submit %>

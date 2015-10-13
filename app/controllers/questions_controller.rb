@@ -28,8 +28,8 @@ class QuestionsController < ApplicationController
 
     respond_to do |format|
       if @question.save
-        format.html { redirect_to @question, notice: 'Question was successfully created.' }
-        format.json { render :show, status: :created, location: @question }
+        format.html { redirect_to @question.metric.gallina, notice: 'Question was successfully created.' }
+        format.json { render :show, status: :created, location: @question.metric.gallina }
       else
         format.html { render :new }
         format.json { render json: @question.errors, status: :unprocessable_entity }
@@ -69,6 +69,6 @@ class QuestionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def question_params
-      params.require(:question).permit(:metric_id, :sentence)
+      params.require(:question).permit(:metric_id, :sentence, :wanted_statement, :not_wanted_statement)
     end
 end

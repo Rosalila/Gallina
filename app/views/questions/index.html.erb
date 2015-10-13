@@ -7,6 +7,8 @@
     <tr>
       <th>Metric</th>
       <th>Sentence</th>
+      <th>Wanted</th>
+      <th>Not wanted</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -16,6 +18,8 @@
       <tr>
         <td><%= question.metric_id %></td>
         <td><%= question.sentence %></td>
+        <td><%= question.wanted_statement %></td>
+        <td><%= question.not_wanted_statement %></td>
         <td><%= link_to 'Show', question %></td>
         <td><%= link_to 'Edit', edit_question_path(question) %></td>
         <td><%= link_to 'Destroy', question, method: :delete, data: { confirm: 'Are you sure?' } %></td>

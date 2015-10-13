@@ -10,5 +10,15 @@
   <%= @question.sentence %>
 </p>
 
+<p>
+  <strong>Wanted statement:</strong>
+  <%= @question.wanted_statement %>
+</p>
+
+<p>
+  <strong>Not wanted statement:</strong>
+  <%= @question.not_wanted_statement %>
+</p>
+
 <%= link_to 'Edit', edit_question_path(@question) %> |
 <%= link_to 'Back', questions_path %>
