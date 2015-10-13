@@ -1,9 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @gallina.name %>
-</p>
+<h1><%= @gallina.name %></h1>
 
 <p>
   <strong>Description:</strong>
@@ -24,21 +21,22 @@
   <% agreement.user_agreements.each do |user_agreement| %>
     <%=user_agreement.user.email%>
     <% if user_agreement.accepted==true %>
-      Aceptado
+      Accepted
     <% else %>
-      Rechazado
+      Rejected
     <% end %>
     (<%=user_agreement.created_at%>)
     <br>
   <% end %>
   <br>
-  <a href="/home/accept_agreement?agreement_id=<%=agreement.id%>&accepted=true">accept</a>
-  <a href="/home/accept_agreement?agreement_id=<%=agreement.id%>&accepted=false">reject</a>
+  <br>
+  <a href="/home/accept_agreement?agreement_id=<%=agreement.id%>&accepted=true">Accepet</a>
+  <a href="/home/accept_agreement?agreement_id=<%=agreement.id%>&accepted=false">Reject</a>
   <br>
 <% end %>
 <hr>
 
-<h2>Add new agreement</h2>
+<h3>New agreement</h3>
 
 <%= form_for(Agreement.new) do |f| %>
   <div class="field">
@@ -47,6 +45,65 @@
   <div class="field">
     <%= f.label :statement %><br>
     <%= f.text_area :statement %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+<h2>Metrics</h2>
+
+<% @gallina.metrics.each do |metric| %>
+  <b>
+    <%= metric.name %>
+  </b>
+  <i>
+    <%= metric.description %>
+  </i>
+  (weight: <%= metric.weight %>)
+  <br>
+
+  <ul>
+    <% metric.questions.each do |question| %>
+      <li>
+        <%= question.sentence %>
+      </li>
+    <% end %>
+  </ul>
+
+  <h4>New question</h4>
+  <%= form_for(Question.new) do |f| %>
+    <div class="field">
+      <%= f.hidden_field :metric_id, :value=> metric.id %>
+    </div>
+    <div class="field">
+      <%= f.label :sentence %><br>
+      <%= f.text_field :sentence %>
+    </div>
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+  <% end %>
+
+<% end %>
+
+<h3>New metric</h3>
+
+<%= form_for(Metric.new) do |f| %>
+  <div class="field">
+    <%= f.hidden_field :gallina_id, :value=> @gallina.id %>
+  </div>
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br>
+    <%= f.text_area :description %>
+  </div>
+  <div class="field">
+    <%= f.label :weight %><br>
+    <%= f.number_field :weight %>
   </div>
   <div class="actions">
     <%= f.submit %>

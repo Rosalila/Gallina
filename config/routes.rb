@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :questions
+  resources :metrics
   resources :user_agreements
   resources :agreements
   devise_for :users, :controllers => { :omniauth_callbacks => "callbacks" }
