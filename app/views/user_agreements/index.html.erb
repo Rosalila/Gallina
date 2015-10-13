@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing User Agreements</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Agreement</th>
+      <th>Accepted</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @user_agreements.each do |user_agreement| %>
+      <tr>
+        <td><%= user_agreement.user_id %></td>
+        <td><%= user_agreement.agreement_id %></td>
+        <td><%= user_agreement.accepted %></td>
+        <td><%= link_to 'Show', user_agreement %></td>
+        <td><%= link_to 'Edit', edit_user_agreement_path(user_agreement) %></td>
+        <td><%= link_to 'Destroy', user_agreement, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New User agreement', new_user_agreement_path %>

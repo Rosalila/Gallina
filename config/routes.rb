@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
+  resources :user_agreements
+  resources :agreements
   devise_for :users, :controllers => { :omniauth_callbacks => "callbacks" }
   resources :gallinas
   root 'gallinas#index'
   get 'home/index'
+  get '/home/accept_agreement', to: 'home#accept_agreement', as: 'accept_agreement'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
