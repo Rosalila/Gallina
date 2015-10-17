@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Gallina Members</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Gallina</th>
+      <th>User</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @gallina_members.each do |gallina_member| %>
+      <tr>
+        <td><%= gallina_member.gallina_id %></td>
+        <td><%= gallina_member.user_id %></td>
+        <td><%= link_to 'Show', gallina_member %></td>
+        <td><%= link_to 'Edit', edit_gallina_member_path(gallina_member) %></td>
+        <td><%= link_to 'Destroy', gallina_member, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Gallina member', new_gallina_member_path %>

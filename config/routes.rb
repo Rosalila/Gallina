@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'gallinas/:id/invite' => 'gallinas#invite', as: :invite
+  resources :gallina_members
   resources :questions
   resources :metrics
   resources :user_agreements

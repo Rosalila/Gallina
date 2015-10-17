@@ -11,11 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151013041246) do
+ActiveRecord::Schema.define(version: 20151017134754) do
 
   create_table "agreements", force: :cascade do |t|
     t.integer  "gallina_id"
     t.text     "statement"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "gallina_members", force: :cascade do |t|
+    t.integer  "gallina_id"
+    t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

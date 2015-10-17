@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
 
   has_many :user_agreements
+  has_many :gallina_members
+  has_many :gallinas, through: :gallina_members
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

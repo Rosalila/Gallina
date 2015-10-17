@@ -1,0 +1,2 @@
+module GallinaMembersHelper
+end

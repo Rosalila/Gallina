@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Gallina:</strong>
+  <%= @gallina_member.gallina_id %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @gallina_member.user_id %>
+</p>
+
+<%= link_to 'Edit', edit_gallina_member_path(@gallina_member) %> |
+<%= link_to 'Back', gallina_members_path %>
