@@ -76,6 +76,11 @@ class GallinasController < ApplicationController
     end
   end
 
+  def review_submission
+    @gallina = Gallina.find_by_id(params[:gallina_id])
+    @reviewed = User.find_by_id(params[:user_id])
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_gallina

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151017134754) do
+ActiveRecord::Schema.define(version: 20151018152150) do
 
   create_table "agreements", force: :cascade do |t|
     t.integer  "gallina_id"
@@ -50,6 +50,15 @@ ActiveRecord::Schema.define(version: 20151017134754) do
     t.datetime "updated_at",           null: false
     t.string   "wanted_statement"
     t.string   "not_wanted_statement"
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.integer  "question_id"
+    t.integer  "reviewer_id"
+    t.integer  "reviewed_id"
+    t.integer  "grade"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "user_agreements", force: :cascade do |t|

@@ -1,0 +1,49 @@
+<h1>Invite members to <%=@gallina.name%></h1>
+<h1>Invite members to <%=@reviewed.email%></h1>
+
+<h2>Metrics</h2>
+
+<%=form_tag "/home/set_rules", method: :post do%>
+<input name="gallina_id" value="<%=@gallina.id%>" type="hidden"/>
+<input name="reviewed_id" value="<%=@reviewed.id%>" type="hidden"/>
+<% @gallina.metrics.each do |metric| %>
+  <b>
+    <%= metric.name %>
+  </b>
+  <i>
+    <%= metric.description %>
+  </i>
+  (weight: <%= metric.weight %>)
+  <br>
+
+  <ul>
+    <% metric.questions.each do |question| %>
+      <li>
+        <%= question.sentence %>
+        <ul>
+          <li>
+            <%= question.wanted_statement %>
+          </li>
+          <select name="questions[<%=question.id%>]">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+          </select>
+          <li>
+            <%= question.not_wanted_statement %>
+          </li>
+        </ul>
+      </li>
+    <% end %>
+  </ul>
+
+<% end %>
+<button type="submit" class="btn btn-primary"><%=t('Save')%></button>
+<% end %>
