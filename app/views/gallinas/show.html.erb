@@ -25,7 +25,10 @@
   <br>
   <% @gallina.agreements.each do |agreement| %>
     <hr>
-    (<%= agreement.created_at %>)
+    <div class="event">
+      <h6>(<%= agreement.created_at %>)</h6>
+    </div>
+    
     <br>
     <%= agreement.statement %>
     <br>
@@ -74,61 +77,63 @@
   <h3>Metrics</h3>
 
   <% @gallina.metrics.each do |metric| %>
-    <ul class="terms-start">
-      <li><a href="#"><i></i><%= metric.name %></a></li>
-      <i>
-        <%= metric.description %>
-      </i>
-      (weight: <%= metric.weight %>)
-      <br>
-    </ul>
+    <div class="panel panel-success">
+      <div class="panel-heading">
+        <label class="panel-title"><%= metric.name %></label>
+        <p>Description: <%= metric.description %></p>
+        <span>(weight: <%= metric.weight %>)</span>
+      </div>
+      <div class="panel-body">
+        <h4>Questions</h4>
+        <ul class="questions">
+          <% metric.questions.each do |question| %>
+            </br>
+            <li>
+              <h5><%= question.sentence %></h5>
+              <ul>
+                <li>
+                  <label>Wanted: </label>
+                  <%= question.wanted_statement %>
+                </li>
+                <li>
+                  <label>Not Wanted: </label>
+                  <%= question.not_wanted_statement %>
+                </li>
+              </ul>
+            </li>
+          <% end %>
+        </ul>
 
-    <h4>Questions</h4>
-    <ul>
-      <% metric.questions.each do |question| %>
-        <li>
-          <%= question.sentence %>
-          <ul>
-            <li>
-              <%= question.wanted_statement %>
-            </li>
-            <li>
-              <%= question.not_wanted_statement %>
-            </li>
+        <div class="btn-group">
+          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            New Question <span class="caret"></span>
+          </button>
+          <ul id="new_question" class="dropdown-menu">
+            <%= form_for(Question.new) do |f| %>
+              <li>
+                <%= f.hidden_field :metric_id, :value=> metric.id %>
+              </li>
+              <li>
+                <%= f.label :sentence %><br>
+                <%= f.text_field :sentence %>
+              </li>
+              <li>
+                <%= f.label :wanted_statement %><br>
+                <%= f.text_field :wanted_statement %>
+              </li>
+              <li>
+                <%= f.label :not_wanted_statement %><br>
+                <%= f.text_field :not_wanted_statement %>
+              </li>
+              <li class="actions hvr-sweep-to-right">
+                <%= f.submit %>
+              </li>
+            <% end %>
           </ul>
-        </li>
-      <% end %>
-    </ul>
-
-    <div class="btn-group">
-      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        New Question <span class="caret"></span>
-      </button>
-      <ul id="new_question" class="dropdown-menu">
-        <%= form_for(Question.new) do |f| %>
-          <li>
-            <%= f.hidden_field :metric_id, :value=> metric.id %>
-          </li>
-          <li>
-            <%= f.label :sentence %><br>
-            <%= f.text_field :sentence %>
-          </li>
-          <li>
-            <%= f.label :wanted_statement %><br>
-            <%= f.text_field :wanted_statement %>
-          </li>
-          <li>
-            <%= f.label :not_wanted_statement %><br>
-            <%= f.text_field :not_wanted_statement %>
-          </li>
-          <li class="actions hvr-sweep-to-right">
-            <%= f.submit %>
-          </li>
-        <% end %>
-      </ul>
+        </div>
+      </div>
     </div>
-
-  <% end %>
+  <%end%>
 
   <h2>New metric</h2>
   </br>

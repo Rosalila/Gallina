@@ -6,8 +6,10 @@
     <% @gallinas.each do |gallina| %>
       
            <%#<a href="blog_single.html"><img src="images/bl.jpg" class="img-responsive" alt=""/></a>%>
-        <h4><%= gallina.name %></h4>
-        <h5>Posted at <%= gallina.created_at %></h5>
+        <div class="event">
+          <h4><%= gallina.name %></h4>
+          <h6>Posted at <%= gallina.created_at %></h6>
+        </div>
         <p><%= gallina.description %></p>
         <%= link_to 'Read More', gallina, class: "hvr-sweep-to-right more" %>
         <%= link_to 'Edit', edit_gallina_path(gallina), class: "hvr-sweep-to-right more" %>
