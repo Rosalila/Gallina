@@ -81,6 +81,20 @@ class GallinasController < ApplicationController
     @reviewed = User.find_by_id(params[:user_id])
   end
 
+  def reviewed
+    question_id = params[:question_id]
+    reviewer_id = current_user.id
+    reviewed_id = params[:reviewed_id]
+    params[:questions].each do |question|
+      review = Review.new
+      review.reviewer_id = reviewer_id
+      review.reviewed_id = reviewed_id
+      review.question_id = question.first
+      review.grade = question.second
+      review.save
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_gallina

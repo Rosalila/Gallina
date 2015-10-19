@@ -10,6 +10,7 @@
   <h2>Users</h2>
   <%@gallina.users.each do |user|%>
     <%=user.email%>
+    <a href="/gallinas/<%=@gallina.id%>/review_submission/<%=user.id%>">Rate</a>
   </br>
   <%end%>
   <%= link_to "/gallinas/#{@gallina.id}/invite", class: "btn hvr-sweep-to-right" do %>

@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   resources :reviews
   get 'gallinas/:id/invite' => 'gallinas#invite', as: :invite
+  post 'gallinas/reviewed' => 'gallinas#reviewed', as: :reviewed
   get 'gallinas/:gallina_id/review_submission/:user_id' => 'gallinas#review_submission', as: :review_submission
   resources :gallina_members
   resources :questions
