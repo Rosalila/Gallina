@@ -1,29 +1,39 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Gallinas</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Description</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
+<h3>Listing Gallinas</h3>
+<div class="feedback-top">
+  <div class="col-md blog-head">
     <% @gallinas.each do |gallina| %>
-      <tr>
-        <td><%= gallina.name %></td>
-        <td><%= gallina.description %></td>
-        <td><%= link_to 'Show', gallina %></td>
-        <td><%= link_to 'Edit', edit_gallina_path(gallina) %></td>
-        <td><%= link_to 'Destroy', gallina, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Gallina', new_gallina_path %>
+      
+           <%#<a href="blog_single.html"><img src="images/bl.jpg" class="img-responsive" alt=""/></a>%>
+        <div class="event">
+          <h4><%= gallina.name %></h4>
+          <h6>Posted at <%= gallina.created_at %></h6>
+        </div>
+        <p><%= gallina.description %></p>
+        <%= link_to 'Read More', gallina, class: "hvr-sweep-to-right more" %>
+        <%= link_to 'Edit', edit_gallina_path(gallina), class: "hvr-sweep-to-right more" %>
+        <%= link_to 'Destroy', gallina, method: :delete, data: { confirm: 'Are you sure?' }, class: "hvr-sweep-to-right more" %>
+        <div class="links">
+          <ul class="blog-links">
+            <li><a href="#"><i class="blog_circle"><%= gallina.agreements.count %> </i><span>Agreements</span></a></li>
+            <li><a href="#"><i class="blog_circle"><%= gallina.metrics.count %> </i><span>Metrics</span></a></li>
+          </ul>
+        </div>
+      
+    <%end%>
+  </div>
+  
+  <div class="clearfix"> </div>
+  <nav>
+    <ul class="pager">
+      <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
+      <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
+      <li><a href="#">2</a></li>
+      <li><a href="#">3</a></li>
+      <li><a href="#">4</a></li>
+      <li><a href="#">5</a></li>
+      <li><a href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+    </ul>
+  </nav>
+</div>

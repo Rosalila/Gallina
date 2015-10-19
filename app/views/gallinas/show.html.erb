@@ -1,136 +1,160 @@
 <p id="notice"><%= notice %></p>
+<div class="feedback-top">
+  <h3><%= @gallina.name %></h3>
 
-<h1><%= @gallina.name %></h1>
+  <p>
+    <strong>Description:</strong>
+    <%= @gallina.description %>
+  </p>
 
-<p>
-  <strong>Description:</strong>
-  <%= @gallina.description %>
-</p>
-
-<%= link_to 'Edit', edit_gallina_path(@gallina) %> |
-<%= link_to 'Back', gallinas_path %>
-
-<h2>Users</h2>
-<%@gallina.users.each do |user|%>
-  <%=user.email%>
+  <h2>Users</h2>
+  <%@gallina.users.each do |user|%>
+    <%=user.email%>
   </br>
-<%end%>
+  <%end%>
+  <%= link_to "/gallinas/#{@gallina.id}/invite", class: "btn hvr-sweep-to-right" do %>
+    <i class="glyphicon glyphicon-plus"> </i>Invite
+  <%end%>
 
-<a href="/gallinas/<%=@gallina.id%>/invite">Invite</a>
+  <%#= link_to 'Edit', edit_gallina_path(@gallina) %> 
+  <%#= link_to 'Back', gallinas_path %>
+</div>
+<h3>Agreements</h3>
 
-<h2>Agreements</h2>
-<br>
-<% @gallina.agreements.each do |agreement| %>
-  <hr>
-  (<%= agreement.created_at %>)
+<div class="feedback-top">
   <br>
-  <%= agreement.statement %>
-  <br>
-  <br>
-  <% agreement.user_agreements.each do |user_agreement| %>
-    <%=user_agreement.user.email%>
-    <% if user_agreement.accepted==true %>
-      Accepted
-    <% else %>
-      Rejected
+  <% @gallina.agreements.each do |agreement| %>
+    <hr>
+    <div class="event">
+      <h6>(<%= agreement.created_at %>)</h6>
+    </div>
+    
+    <br>
+    <%= agreement.statement %>
+    <br>
+    <br>
+    <% agreement.user_agreements.each do |user_agreement| %>
+      <%=user_agreement.user.email%>
+      <% if user_agreement.accepted==true %>
+        Accepted
+      <% else %>
+        Rejected
+      <% end %>
+      (<%=user_agreement.created_at%>)
+      <br>
     <% end %>
-    (<%=user_agreement.created_at%>)
+    <br>
+    <br>
+    <div class="links">
+      <ul class="blog-links">
+        <li><a href="/home/accept_agreement?agreement_id=<%=agreement.id%>&accepted=true"><i class="glyphicon glyphicon-ok"> </i><span>Accept</span></a></li>
+        <li><a href="/home/accept_agreement?agreement_id=<%=agreement.id%>&accepted=false"><i class="glyphicon glyphicon-remove"> </i><span>Reject</span></a></li>
+      </ul>
+    </div>
     <br>
   <% end %>
-  <br>
-  <br>
-  <a href="/home/accept_agreement?agreement_id=<%=agreement.id%>&accepted=true">Accept</a>
-  <a href="/home/accept_agreement?agreement_id=<%=agreement.id%>&accepted=false">Reject</a>
-  <br>
-<% end %>
-<hr>
+  <hr>
 
-<h3>New agreement</h3>
 
-<%= form_for(Agreement.new) do |f| %>
-  <div class="field">
-    <%= f.hidden_field :gallina_id, :value=> @gallina.id %>
-  </div>
-  <div class="field">
-    <%= f.label :statement %><br>
-    <%= f.text_area :statement %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
 
-<h2>Metrics</h2>
-
-<% @gallina.metrics.each do |metric| %>
-  <b>
-    <%= metric.name %>
-  </b>
-  <i>
-    <%= metric.description %>
-  </i>
-  (weight: <%= metric.weight %>)
-  <br>
-
-  <ul>
-    <% metric.questions.each do |question| %>
-      <li>
-        <%= question.sentence %>
-        <ul>
-          <li>
-            <%= question.wanted_statement %>
-          </li>
-          <li>
-            <%= question.not_wanted_statement %>
-          </li>
-        </ul>
-      </li>
-    <% end %>
-  </ul>
-
-  <h4>New question</h4>
-  <%= form_for(Question.new) do |f| %>
+  <h2>New agreement</h2>
+  </br>
+  <%= form_for(Agreement.new) do |f| %>
     <div class="field">
-      <%= f.hidden_field :metric_id, :value=> metric.id %>
+      <%= f.hidden_field :gallina_id, :value=> @gallina.id %>
     </div>
     <div class="field">
-      <%= f.label :sentence %><br>
-      <%= f.text_field :sentence %>
+      <%= f.label :statement %><br>
+      <%= f.text_area :statement %>
     </div>
-    <div class="field">
-      <%= f.label :wanted_statement %><br>
-      <%= f.text_field :wanted_statement %>
-    </div>
-    <div class="field">
-      <%= f.label :not_wanted_statement %><br>
-      <%= f.text_field :not_wanted_statement %>
-    </div>
-    <div class="actions">
+    <div class="actions hvr-sweep-to-right">
       <%= f.submit %>
     </div>
   <% end %>
 
-<% end %>
 
-<h3>New metric</h3>
 
-<%= form_for(Metric.new) do |f| %>
-  <div class="field">
-    <%= f.hidden_field :gallina_id, :value=> @gallina.id %>
-  </div>
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_area :description %>
-  </div>
-  <div class="field">
-    <%= f.label :weight %><br>
-    <%= f.number_field :weight %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+  <h3>Metrics</h3>
+
+  <% @gallina.metrics.each do |metric| %>
+    <div class="panel panel-success">
+      <div class="panel-heading">
+        <label class="panel-title"><%= metric.name %></label>
+        <p>Description: <%= metric.description %></p>
+        <span>(weight: <%= metric.weight %>)</span>
+      </div>
+      <div class="panel-body">
+        <h4>Questions</h4>
+        <ul class="questions">
+          <% metric.questions.each do |question| %>
+            </br>
+            <li>
+              <h5><%= question.sentence %></h5>
+              <ul>
+                <li>
+                  <label>Wanted: </label>
+                  <%= question.wanted_statement %>
+                </li>
+                <li>
+                  <label>Not Wanted: </label>
+                  <%= question.not_wanted_statement %>
+                </li>
+              </ul>
+            </li>
+          <% end %>
+        </ul>
+
+        <div class="btn-group">
+          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            New Question <span class="caret"></span>
+          </button>
+          <ul id="new_question" class="dropdown-menu">
+            <%= form_for(Question.new) do |f| %>
+              <li>
+                <%= f.hidden_field :metric_id, :value=> metric.id %>
+              </li>
+              <li>
+                <%= f.label :sentence %><br>
+                <%= f.text_field :sentence %>
+              </li>
+              <li>
+                <%= f.label :wanted_statement %><br>
+                <%= f.text_field :wanted_statement %>
+              </li>
+              <li>
+                <%= f.label :not_wanted_statement %><br>
+                <%= f.text_field :not_wanted_statement %>
+              </li>
+              <li class="actions hvr-sweep-to-right">
+                <%= f.submit %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  <%end%>
+
+  <h2>New metric</h2>
+  </br>
+  <%= form_for(Metric.new) do |f| %>
+    <div class="field">
+      <%= f.hidden_field :gallina_id, :value=> @gallina.id %>
+    </div>
+    <div class="field">
+      <%= f.label :name %><br>
+      <%= f.text_field :name %>
+    </div>
+    <div class="field">
+      <%= f.label :description %><br>
+      <%= f.text_area :description %>
+    </div>
+    <div class="field">
+      <%= f.label :weight %><br>
+      <%= f.number_field :weight %>
+    </div>
+    <div class="actions hvr-sweep-to-right">
+      <%= f.submit %>
+    </div>
+  <% end %>
+</div>

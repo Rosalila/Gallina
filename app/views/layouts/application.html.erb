@@ -8,11 +8,15 @@
 </head>
 <body>
 
-<% if current_user %>
-  <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
-<% end %>
+<%= render "partials/navigation" %>
 
-<%= yield %>
+<!--blog-->
+<div class="blog">
+	<div class="container">
+		<%= yield %>
+	</div>
+</div>
 
+<%= render "partials/footer" %>
 </body>
 </html>
