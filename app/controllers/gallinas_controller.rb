@@ -28,6 +28,10 @@ class GallinasController < ApplicationController
 
     respond_to do |format|
       if @gallina.save
+        gallina_member = GallinaMember.new
+        gallina_member.gallina_id = @gallina.id
+        gallina_member.user_id = current_user.id
+        gallina_member.save
         format.html { redirect_to @gallina, notice: 'Gallina was successfully created.' }
         format.json { render :show, status: :created, location: @gallina }
       else
@@ -58,6 +62,17 @@ class GallinasController < ApplicationController
     respond_to do |format|
       format.html { redirect_to gallinas_url, notice: 'Gallina was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def invite
+    @gallina = Gallina.find_by_id(params[:id])
+    @invited = User.find_by_id(params[:invited_id])
+    if @invited && @gallina.users.include?(current_user)  && !@gallina.users.include?(@invited)
+      gallina_member = GallinaMember.new
+      gallina_member.gallina_id = @gallina.id
+      gallina_member.user_id = @invited.id
+      gallina_member.save
     end
   end
 

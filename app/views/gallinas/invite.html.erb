@@ -1,0 +1,7 @@
+<h1>Invite members to <%=@gallina.name%></h1>
+
+<h2>Invite users</h2>
+<% User.all.each do |user| %>
+  <%= user.email %>
+  <a href="/gallinas/<%=@gallina.id%>/invite?invited_id=<%=user.id%>">invite</a>
+<% end %>

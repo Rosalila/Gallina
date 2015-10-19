@@ -1,0 +1,28 @@
+<h3>Login</h3>
+<div class="login-top">
+    <div class="form-info">
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+        <div class="field">
+          <%= f.label :email %><br />
+          <%= f.text_field :email, placeholder: "Email Adress", required: true, autofocus: true, class: "text" %>
+        </div>
+
+        <div class="field">
+          <%= f.label :password %><br />
+          <%= f.password_field :password, placeholder: "Password", required: true, autocomplete: "off" %>
+        </div>
+
+        <% if devise_mapping.rememberable? -%>
+          <div class="field">
+            <%= f.check_box :remember_me %>
+            <%= f.label :remember_me %>
+          </div>
+        <% end -%>
+
+        <div class="actions hvr-sweep-to-right">
+          <%= f.submit "Log in" %>
+        </div>
+      <% end %>
+    </div>
+    <%= render "devise/shared/links" %>
+</div>

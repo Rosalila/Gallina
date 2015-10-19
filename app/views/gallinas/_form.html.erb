@@ -1,25 +1,27 @@
-<%= form_for(@gallina) do |f| %>
-  <% if @gallina.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@gallina.errors.count, "error") %> prohibited this gallina from being saved:</h2>
+<div class="form-info">
+  <%= form_for(@gallina) do |f| %>
+    <% if @gallina.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@gallina.errors.count, "error") %> prohibited this gallina from being saved:</h2>
 
-      <ul>
-      <% @gallina.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+        <ul>
+        <% @gallina.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= f.label :name %><br>
+      <%= f.text_field :name %>
+    </div>
+    <div class="field">
+      <%= f.label :description %><br>
+      <%= f.text_area :description, :style => "width: 100%; height: 140px" %>
+    </div>
+    <div class="actions hvr-sweep-to-right">
+      <%= f.submit %>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_area :description %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+</div>

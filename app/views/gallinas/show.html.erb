@@ -1,16 +1,26 @@
 <p id="notice"><%= notice %></p>
+<div class="feedback-top">
+  <h3><%= @gallina.name %></h3>
 
-<h3><%= @gallina.name %></h3>
+  <p>
+    <strong>Description:</strong>
+    <%= @gallina.description %>
+  </p>
 
-<p>
-  <strong>Description:</strong>
-  <%= @gallina.description %>
-</p>
+  <h2>Users</h2>
+  <%@gallina.users.each do |user|%>
+    <%=user.email%>
+  </br>
+  <%end%>
+  <%= link_to "/gallinas/#{@gallina.id}/invite", class: "btn hvr-sweep-to-right" do %>
+    <i class="glyphicon glyphicon-plus"> </i>Invite
+  <%end%>
 
-<%= link_to 'Edit', edit_gallina_path(@gallina) %> |
-<%= link_to 'Back', gallinas_path %>
-
+  <%#= link_to 'Edit', edit_gallina_path(@gallina) %> 
+  <%#= link_to 'Back', gallinas_path %>
+</div>
 <h3>Agreements</h3>
+
 <div class="feedback-top">
   <br>
   <% @gallina.agreements.each do |agreement| %>
@@ -32,8 +42,12 @@
     <% end %>
     <br>
     <br>
-    <a href="/home/accept_agreement?agreement_id=<%=agreement.id%>&accepted=true">Accept</a>
-    <a href="/home/accept_agreement?agreement_id=<%=agreement.id%>&accepted=false">Reject</a>
+    <div class="links">
+      <ul class="blog-links">
+        <li><a href="/home/accept_agreement?agreement_id=<%=agreement.id%>&accepted=true"><i class="glyphicon glyphicon-ok"> </i><span>Accept</span></a></li>
+        <li><a href="/home/accept_agreement?agreement_id=<%=agreement.id%>&accepted=false"><i class="glyphicon glyphicon-remove"> </i><span>Reject</span></a></li>
+      </ul>
+    </div>
     <br>
   <% end %>
   <hr>
@@ -41,6 +55,7 @@
 
 
   <h2>New agreement</h2>
+  </br>
   <%= form_for(Agreement.new) do |f| %>
     <div class="field">
       <%= f.hidden_field :gallina_id, :value=> @gallina.id %>
@@ -49,7 +64,7 @@
       <%= f.label :statement %><br>
       <%= f.text_area :statement %>
     </div>
-    <div class="actions">
+    <div class="actions hvr-sweep-to-right">
       <%= f.submit %>
     </div>
   <% end %>
@@ -59,15 +74,16 @@
   <h3>Metrics</h3>
 
   <% @gallina.metrics.each do |metric| %>
-    <b>
-      <%= metric.name %>
-    </b>
-    <i>
-      <%= metric.description %>
-    </i>
-    (weight: <%= metric.weight %>)
-    <br>
+    <ul class="terms-start">
+      <li><a href="#"><i></i><%= metric.name %></a></li>
+      <i>
+        <%= metric.description %>
+      </i>
+      (weight: <%= metric.weight %>)
+      <br>
+    </ul>
 
+    <h4>Questions</h4>
     <ul>
       <% metric.questions.each do |question| %>
         <li>
@@ -84,32 +100,38 @@
       <% end %>
     </ul>
 
-    <h2>New question</h2>
-    <%= form_for(Question.new) do |f| %>
-      <div class="field">
-        <%= f.hidden_field :metric_id, :value=> metric.id %>
-      </div>
-      <div class="field">
-        <%= f.label :sentence %><br>
-        <%= f.text_field :sentence %>
-      </div>
-      <div class="field">
-        <%= f.label :wanted_statement %><br>
-        <%= f.text_field :wanted_statement %>
-      </div>
-      <div class="field">
-        <%= f.label :not_wanted_statement %><br>
-        <%= f.text_field :not_wanted_statement %>
-      </div>
-      <div class="actions">
-        <%= f.submit %>
-      </div>
-    <% end %>
+    <div class="btn-group">
+      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        New Question <span class="caret"></span>
+      </button>
+      <ul id="new_question" class="dropdown-menu">
+        <%= form_for(Question.new) do |f| %>
+          <li>
+            <%= f.hidden_field :metric_id, :value=> metric.id %>
+          </li>
+          <li>
+            <%= f.label :sentence %><br>
+            <%= f.text_field :sentence %>
+          </li>
+          <li>
+            <%= f.label :wanted_statement %><br>
+            <%= f.text_field :wanted_statement %>
+          </li>
+          <li>
+            <%= f.label :not_wanted_statement %><br>
+            <%= f.text_field :not_wanted_statement %>
+          </li>
+          <li class="actions hvr-sweep-to-right">
+            <%= f.submit %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
 
   <% end %>
 
   <h2>New metric</h2>
-
+  </br>
   <%= form_for(Metric.new) do |f| %>
     <div class="field">
       <%= f.hidden_field :gallina_id, :value=> @gallina.id %>
@@ -126,7 +148,7 @@
       <%= f.label :weight %><br>
       <%= f.number_field :weight %>
     </div>
-    <div class="actions">
+    <div class="actions hvr-sweep-to-right">
       <%= f.submit %>
     </div>
   <% end %>

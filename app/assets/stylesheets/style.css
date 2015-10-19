@@ -4989,3 +4989,7 @@ a.more {
   margin: 0.5em 0 0;
 }
 }
+#new_question{
+	width: 780px;
+	min-width: 100px;
+}
