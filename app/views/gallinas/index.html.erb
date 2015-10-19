@@ -27,3 +27,36 @@
 <br>
 
 <%= link_to 'New Gallina', new_gallina_path %>
+
+
+  <h3>Listing Gallinas</h3>
+   <div class="col-md blog-head">
+      <% @gallinas.each do |gallina| %>
+       <div class="blog-top">
+           <%#<a href="blog_single.html"><img src="images/bl.jpg" class="img-responsive" alt=""/></a>%>
+           <h4><%= gallina.name %></h4>
+           <h5>Posted at <%= gallina.created_at %></h5>
+          <p><%= gallina.description %></p>
+            <%= link_to 'Read More', gallina, class: "hvr-sweep-to-right more" %>
+             <div class="links">
+            <ul class="blog-links">
+            <li><a href="#"><i class="blog_circle">24 </i><span>Comments</span></a></li>
+            <li><a href="#"><i class="glyphicon glyphicon-heart"> </i><span>Like</span></a></li>
+            </ul>
+           </div>
+     </div>
+     <%end%>
+  </div>
+  
+   <div class="clearfix"> </div>
+   <nav>
+      <ul class="pagination">
+        <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
+        <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">5</a></li>
+        <li><a href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+     </ul>
+   </nav>

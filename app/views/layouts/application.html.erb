@@ -8,7 +8,15 @@
 </head>
 <body>
 
-<%= yield %>
+<%= render "partials/navigation" %>
 
+<!--blog-->
+<div class="blog">
+	<div class="container">
+		<%= yield %>
+	</div>
+</div>
+
+<%= render "partials/footer" %>
 </body>
 </html>
