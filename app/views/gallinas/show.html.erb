@@ -11,7 +11,7 @@
   <%@gallina.users.each do |user|%>
     <%=user.email%>
     <a href="/gallinas/<%=@gallina.id%>/review_submission/<%=user.id%>">Rate</a>
-  </br>
+    </br>
   <%end%>
   <%= link_to "/gallinas/#{@gallina.id}/invite", class: "btn hvr-sweep-to-right" do %>
     <i class="glyphicon glyphicon-plus"> </i>Invite
@@ -158,4 +158,47 @@
       <%= f.submit %>
     </div>
   <% end %>
+
+  <h3>Reviews</h3>
+  <% @gallina.users.each do |reviewed| %>
+  <h2><%=reviewed.email%> results</h2>
+    <table border="2">
+      <tr>
+        <td>
+          <b>Reviewer</b>
+        </td>
+        <% @gallina.metrics.each do |metric| %>
+          <td colspan="<%= metric.questions.size %>">
+            <b><%= metric.name %></b>
+          </td>
+        <% end %>
+      </tr>
+      <tr>
+        <td>
+        </td>
+        <% @gallina.metrics.each do |metric| %>
+          <% metric.questions.each do |question| %>
+            <td>
+              <%= question.sentence %>
+            </td>
+          <% end %>
+        <% end %>
+      </tr>
+      <% @gallina.users.each do |reviewer| %>
+        <tr>
+          <td>
+            <%= reviewer.email %>
+          </td>
+          <% @gallina.metrics.each do |metric| %>
+            <% metric.questions.each do |question| %>
+              <td>
+                <%= Review.where(:question_id=>question.id, :reviewer_id=>reviewer.id, :reviewed_id=>reviewed.id).last.grade %>
+              </td>
+            <% end %>
+          <% end %>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>
+  </br>
 </div>
