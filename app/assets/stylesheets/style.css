@@ -4989,6 +4989,9 @@ a.more {
   margin: 0.5em 0 0;
 }
 }
+#panel-review{
+	width: 750px;
+}
 #new_question{
 	width: 650px;
 	min-width: 100px;
@@ -4996,4 +4999,10 @@ a.more {
 #new_question form{
 	width: 80%;
 	margin: auto;
+}
+#columna_lateral
+{
+	width:40%;
+	text-align: justify;
+	padding: 25px;
 }
