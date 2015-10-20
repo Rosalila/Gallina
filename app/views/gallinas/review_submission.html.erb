@@ -18,28 +18,32 @@
 
   <ul>
     <% metric.questions.each do |question| %>
-      <div class="panel panel-success">
+      <div id="panel-review" class="panel panel-success">
         <div class="panel-heading">
           <%= question.sentence %>
         </div>
-        <div class="panel-body">
-          <ul>            
-            <div class="row center-block text-justify">
-              <div class="col-md-1">
-                <%= question.wanted_statement %>
-              </div>
-              <% 10.times do |v| %>
-                <div class="col-md-1">
-                  <i><%=v+1%></i></br>
-                  <%= radio_button_tag "questions[#{question.id}]", v+1 %>
-                </div>
-              <% end %>
-              <div class="col-md-1">
-                <%= question.not_wanted_statement %>
-              </div>
-            </div>
-            </br>
-          </ul>
+        <div class="panel-body">        
+          <!--|  |-->
+          <table>
+            <tbody>
+              <tr>
+                <td id="columna_lateral" rowspan="7">
+                  <p><%= question.not_wanted_statement %></p>
+                </td>
+                <td>
+                  <% 10.times do |v| %>
+                    <td>
+                      <i><%=v+1%></i></br>
+                      <%= radio_button_tag "questions[#{question.id}]", v+1 %>
+                    </td>
+                  <% end %>
+                </td>
+                <td id="columna_lateral" rowspan="7">
+                  <p><%= question.wanted_statement %></p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     <% end %>
