@@ -10,7 +10,6 @@
   <h2>Users</h2>
   <%@gallina.users.each do |user|%>
     <%=user.email%>
-    <a href="/gallinas/<%=@gallina.id%>/review_submission/<%=user.id%>">Rate</a>
     </br>
   <%end%>
   <%= link_to "/gallinas/#{@gallina.id}/invite", class: "btn hvr-sweep-to-right" do %>
@@ -162,6 +161,7 @@
   <h3>Reviews</h3>
   <% @gallina.users.each do |reviewed| %>
   <h2><%=reviewed.email%> results</h2>
+    <a href="/gallinas/<%=@gallina.id%>/review_submission/<%=reviewed.id%>">Review <%= reviewed.email %></a>
     <table border="2">
       <tr>
         <td>
@@ -236,13 +236,13 @@
         <% @gallina.metrics.each do |metric| %>
           <% metric_total = 0 %>
           <% for current_reviewer in 0..@gallina.users.size-1 %>
-            <%= metric_total+= reviewed_global_table[current_reviewer][current_metric] %>
+            <% metric_total+= reviewed_global_table[current_reviewer][current_metric] %>
           <% end %>
           <td colspan="<%= metric.questions.size+1 %>">
             <%= metric_total %>
           </td>
           <% reviewed_total += metric_total %>
-          <%= current_metric+=1 %>
+          <% current_metric+=1 %>
         <% end %>
         <td>
           <b><%= reviewed_total/@gallina.metrics.size.to_f %></b>
