@@ -239,7 +239,7 @@
             <% metric_total+= reviewed_global_table[current_reviewer][current_metric] %>
           <% end %>
           <td colspan="<%= metric.questions.size+1 %>">
-            <%= metric_total %>
+            <%= metric_total/@gallina.users.size %>
           </td>
           <% reviewed_total += metric_total %>
           <% current_metric+=1 %>
