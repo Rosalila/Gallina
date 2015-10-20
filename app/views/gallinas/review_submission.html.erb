@@ -1,9 +1,9 @@
-<h1>Invite members to <%=@gallina.name%></h1>
-<h1>Invite members to <%=@reviewed.email%></h1>
+<h1>Gallina: <%=@gallina.name%></h1>
+<h1>Reviewing <%=@reviewed.email%></h1>
 
 <h2>Metrics</h2>
 
-<%=form_tag "/home/set_rules", method: :post do%>
+<%=form_tag "/gallinas/reviewed", method: :post do%>
 <input name="gallina_id" value="<%=@gallina.id%>" type="hidden"/>
 <input name="reviewed_id" value="<%=@reviewed.id%>" type="hidden"/>
 <% @gallina.metrics.each do |metric| %>
