@@ -192,7 +192,10 @@
           <% @gallina.metrics.each do |metric| %>
             <% metric.questions.each do |question| %>
               <td>
-                <%= Review.where(:question_id=>question.id, :reviewer_id=>reviewer.id, :reviewed_id=>reviewed.id).last.grade %>
+                <% last_grade = Review.where(:question_id=>question.id, :reviewer_id=>reviewer.id, :reviewed_id=>reviewed.id).last %>
+                <% if last_grade %>
+                  <%= last_grade.grade %>
+                <% end %>
               </td>
             <% end %>
           <% end %>
