@@ -22,29 +22,28 @@
         <div class="panel-heading">
           <%= question.sentence %>
         </div>
-        <div class="panel-body">
-        
+        <div class="panel-body">        
           <!--|  |-->
-        <table>
-          <tbody>
-            <tr>
-              <td id="columna_lateral" rowspan="7">
-                <p><%= question.not_wanted_statement %></p>
-              </td>
-              <td>
-                <% 10.times do |v| %>
-                  <td>
-                    <i><%=v+1%></i></br>
-                    <%= radio_button_tag "questions[#{question.id}]", v+1 %>
-                  </td>
-                <% end %>
-              </td>
-              <td id="columna_lateral" rowspan="7">
-                <p><%= question.wanted_statement %></p>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+          <table>
+            <tbody>
+              <tr>
+                <td id="columna_lateral" rowspan="7">
+                  <p><%= question.not_wanted_statement %></p>
+                </td>
+                <td>
+                  <% 10.times do |v| %>
+                    <td>
+                      <i><%=v+1%></i></br>
+                      <%= radio_button_tag "questions[#{question.id}]", v+1 %>
+                    </td>
+                  <% end %>
+                </td>
+                <td id="columna_lateral" rowspan="7">
+                  <p><%= question.wanted_statement %></p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     <% end %>
