@@ -25,7 +25,10 @@ class UserAgreementsController < ApplicationController
   # POST /user_agreements.json
   def create
     @user_agreement = UserAgreement.new(user_agreement_params)
-
+    if !@user_agreement.agreement.gallina.users.include?(current_user)
+      redirect_to @user_agreement.agreement.gallina
+      return
+    end
     respond_to do |format|
       if @user_agreement.save
         format.html { redirect_to @user_agreement, notice: 'User agreement was successfully created.' }
@@ -40,6 +43,10 @@ class UserAgreementsController < ApplicationController
   # PATCH/PUT /user_agreements/1
   # PATCH/PUT /user_agreements/1.json
   def update
+    if !@user_agreement.agreement.gallina.users.include?(current_user)
+      redirect_to @user_agreement.agreement.gallina
+      return
+    end
     respond_to do |format|
       if @user_agreement.update(user_agreement_params)
         format.html { redirect_to @user_agreement, notice: 'User agreement was successfully updated.' }
@@ -54,6 +61,10 @@ class UserAgreementsController < ApplicationController
   # DELETE /user_agreements/1
   # DELETE /user_agreements/1.json
   def destroy
+    if !@user_agreement.agreement.gallina.users.include?(current_user)
+      redirect_to @user_agreement.agreement.gallina
+      return
+    end
     @user_agreement.destroy
     respond_to do |format|
       format.html { redirect_to user_agreements_url, notice: 'User agreement was successfully destroyed.' }

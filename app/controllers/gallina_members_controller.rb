@@ -25,7 +25,10 @@ class GallinaMembersController < ApplicationController
   # POST /gallina_members.json
   def create
     @gallina_member = GallinaMember.new(gallina_member_params)
-
+    if !@gallina_member.gallina.users.include?(current_user)
+      redirect_to @gallina_member.gallina
+      return
+    end
     respond_to do |format|
       if @gallina_member.save
         format.html { redirect_to @gallina_member, notice: 'Gallina member was successfully created.' }
@@ -40,6 +43,10 @@ class GallinaMembersController < ApplicationController
   # PATCH/PUT /gallina_members/1
   # PATCH/PUT /gallina_members/1.json
   def update
+    if !@gallina_member.gallina.users.include?(current_user)
+      redirect_to @gallina_member.gallina
+      return
+    end
     respond_to do |format|
       if @gallina_member.update(gallina_member_params)
         format.html { redirect_to @gallina_member, notice: 'Gallina member was successfully updated.' }
@@ -54,6 +61,10 @@ class GallinaMembersController < ApplicationController
   # DELETE /gallina_members/1
   # DELETE /gallina_members/1.json
   def destroy
+    if !@gallina_member.gallina.users.include?(current_user)
+      redirect_to @gallina_member.gallina
+      return
+    end
     @gallina_member.destroy
     respond_to do |format|
       format.html { redirect_to gallina_members_url, notice: 'Gallina member was successfully destroyed.' }

@@ -25,7 +25,10 @@ class MetricsController < ApplicationController
   # POST /metrics.json
   def create
     @metric = Metric.new(metric_params)
-
+    if !@metric.gallina.users.include?(current_user)
+      redirect_to @metric.gallina
+      return
+    end
     respond_to do |format|
       if @metric.save
         format.html { redirect_to @metric.gallina, notice: 'Metric was successfully created.' }
@@ -40,6 +43,10 @@ class MetricsController < ApplicationController
   # PATCH/PUT /metrics/1
   # PATCH/PUT /metrics/1.json
   def update
+    if !@metric.gallina.users.include?(current_user)
+      redirect_to @metric.gallina
+      return
+    end
     respond_to do |format|
       if @metric.update(metric_params)
         format.html { redirect_to @metric, notice: 'Metric was successfully updated.' }
@@ -54,6 +61,10 @@ class MetricsController < ApplicationController
   # DELETE /metrics/1
   # DELETE /metrics/1.json
   def destroy
+    if !@metric.gallina.users.include?(current_user)
+      redirect_to @metric.gallina
+      return
+    end
     @metric.destroy
     respond_to do |format|
       format.html { redirect_to metrics_url, notice: 'Metric was successfully destroyed.' }

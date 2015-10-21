@@ -44,6 +44,10 @@ class GallinasController < ApplicationController
   # PATCH/PUT /gallinas/1
   # PATCH/PUT /gallinas/1.json
   def update
+    if !@gallina.users.include?(current_user)
+      redirect_to @gallina
+      return
+    end
     respond_to do |format|
       if @gallina.update(gallina_params)
         format.html { redirect_to @gallina, notice: 'Gallina was successfully updated.' }
@@ -58,16 +62,22 @@ class GallinasController < ApplicationController
   # DELETE /gallinas/1
   # DELETE /gallinas/1.json
   def destroy
-    @gallina.destroy
-    respond_to do |format|
-      format.html { redirect_to gallinas_url, notice: 'Gallina was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+#    @gallina.destroy
+#    respond_to do |format|
+#      format.html { redirect_to gallinas_url, notice: 'Gallina was successfully destroyed.' }
+#      format.json { head :no_content }
+#    end
   end
 
   def invite
     @gallina = Gallina.find_by_id(params[:id])
     @invited = User.find_by_id(params[:invited_id])
+
+    if !@gallina.users.include?(current_user)
+      redirect_to @gallina
+      return
+    end
+
     if @invited && @gallina.users.include?(current_user)  && !@gallina.users.include?(@invited)
       gallina_member = GallinaMember.new
       gallina_member.gallina_id = @gallina.id
@@ -82,9 +92,14 @@ class GallinasController < ApplicationController
   end
 
   def reviewed
-    question_id = params[:question_id]
     reviewer_id = current_user.id
     reviewed_id = params[:reviewed_id]
+
+    if !Question.find_by_id(params[:questions].first.first).metric.gallina.users.include?(current_user)
+      redirect_to Question.find_by_id(params[:questions].first.first).metric.gallina
+      return
+    end
+
     params[:questions].each do |question|
       review = Review.new
       review.reviewer_id = reviewer_id

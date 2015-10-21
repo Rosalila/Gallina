@@ -25,7 +25,10 @@ class ReviewsController < ApplicationController
   # POST /reviews.json
   def create
     @review = Review.new(review_params)
-
+    if !@review.question.gallina.users.include?(current_user)
+      redirect_to @review.question.gallina
+      return
+    end
     respond_to do |format|
       if @review.save
         format.html { redirect_to @review, notice: 'Review was successfully created.' }
@@ -40,6 +43,10 @@ class ReviewsController < ApplicationController
   # PATCH/PUT /reviews/1
   # PATCH/PUT /reviews/1.json
   def update
+    if !@review.question.gallina.users.include?(current_user)
+      redirect_to @review.question.gallina
+      return
+    end
     respond_to do |format|
       if @review.update(review_params)
         format.html { redirect_to @review, notice: 'Review was successfully updated.' }
@@ -54,6 +61,10 @@ class ReviewsController < ApplicationController
   # DELETE /reviews/1
   # DELETE /reviews/1.json
   def destroy
+    if !@review.question.gallina.users.include?(current_user)
+      redirect_to @review.question.gallina
+      return
+    end
     @review.destroy
     respond_to do |format|
       format.html { redirect_to reviews_url, notice: 'Review was successfully destroyed.' }
