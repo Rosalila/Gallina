@@ -12,8 +12,10 @@
     <%=user.email%>
     </br>
   <%end%>
-  <%= link_to "/gallinas/#{@gallina.id}/invite", class: "btn hvr-sweep-to-right" do %>
-    <i class="glyphicon glyphicon-plus"> </i>Invite
+  <% if @current_user_is_member %>
+    <%= link_to "/gallinas/#{@gallina.id}/invite", class: "btn hvr-sweep-to-right" do %>
+      <i class="glyphicon glyphicon-plus"> </i>Invite
+    <%end%>
   <%end%>
 
   <%#= link_to 'Edit', edit_gallina_path(@gallina) %> 
@@ -45,31 +47,34 @@
     <% end %>
     <br>
     <br>
-    <div class="links">
-      <ul class="blog-links">
-        <li><a href="/home/accept_agreement?agreement_id=<%=agreement.id%>&accepted=true"><i class="glyphicon glyphicon-ok"> </i><span>Accept</span></a></li>
-        <li><a href="/home/accept_agreement?agreement_id=<%=agreement.id%>&accepted=false"><i class="glyphicon glyphicon-remove"> </i><span>Reject</span></a></li>
-      </ul>
-    </div>
+    <% if @current_user_is_member %>
+      <div class="links">
+        <ul class="blog-links">
+          <li><a href="/home/accept_agreement?agreement_id=<%=agreement.id%>&accepted=true"><i class="glyphicon glyphicon-ok"> </i><span>Accept</span></a></li>
+          <li><a href="/home/accept_agreement?agreement_id=<%=agreement.id%>&accepted=false"><i class="glyphicon glyphicon-remove"> </i><span>Reject</span></a></li>
+        </ul>
+      </div>
+    <% end %>
     <br>
   <% end %>
   <hr>
 
 
-
-  <h2>New agreement</h2>
-  </br>
-  <%= form_for(Agreement.new) do |f| %>
-    <div class="field">
-      <%= f.hidden_field :gallina_id, :value=> @gallina.id %>
-    </div>
-    <div class="field">
-      <%= f.label :statement %><br>
-      <%= f.text_area :statement %>
-    </div>
-    <div class="actions hvr-sweep-to-right">
-      <%= f.submit %>
-    </div>
+  <% if @current_user_is_member %>
+    <h2>New agreement</h2>
+    </br>
+    <%= form_for(Agreement.new) do |f| %>
+      <div class="field">
+        <%= f.hidden_field :gallina_id, :value=> @gallina.id %>
+      </div>
+      <div class="field">
+        <%= f.label :statement %><br>
+        <%= f.text_area :statement %>
+      </div>
+      <div class="actions hvr-sweep-to-right">
+        <%= f.submit %>
+      </div>
+    <% end %>
   <% end %>
 
 
@@ -104,64 +109,70 @@
           <% end %>
         </ul>
 
-        <div class="btn-group">
-          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            New Question <span class="caret"></span>
-          </button>
-          <ul id="new_question" class="dropdown-menu">
-            <%= form_for(Question.new) do |f| %>
-              <li>
-                <%= f.hidden_field :metric_id, :value=> metric.id %>
-              </li>
-              <li>
-                <%= f.label :sentence %><br>
-                <%= f.text_field :sentence %>
-              </li>
-              <li>
-                <%= f.label :wanted_statement %><br>
-                <%= f.text_field :wanted_statement %>
-              </li>
-              <li>
-                <%= f.label :not_wanted_statement %><br>
-                <%= f.text_field :not_wanted_statement %>
-              </li>
-              <li class="actions hvr-sweep-to-right">
-                <%= f.submit %>
-              </li>
-            <% end %>
-          </ul>
-        </div>
+        <% if @current_user_is_member %>
+          <div class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              New Question <span class="caret"></span>
+            </button>
+            <ul id="new_question" class="dropdown-menu">
+              <%= form_for(Question.new) do |f| %>
+                <li>
+                  <%= f.hidden_field :metric_id, :value=> metric.id %>
+                </li>
+                <li>
+                  <%= f.label :sentence %><br>
+                  <%= f.text_field :sentence %>
+                </li>
+                <li>
+                  <%= f.label :wanted_statement %><br>
+                  <%= f.text_field :wanted_statement %>
+                </li>
+                <li>
+                  <%= f.label :not_wanted_statement %><br>
+                  <%= f.text_field :not_wanted_statement %>
+                </li>
+                <li class="actions hvr-sweep-to-right">
+                  <%= f.submit %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
       </div>
     </div>
   <%end%>
 
-  <h2>New metric</h2>
-  </br>
-  <%= form_for(Metric.new) do |f| %>
-    <div class="field">
-      <%= f.hidden_field :gallina_id, :value=> @gallina.id %>
-    </div>
-    <div class="field">
-      <%= f.label :name %><br>
-      <%= f.text_field :name %>
-    </div>
-    <div class="field">
-      <%= f.label :description %><br>
-      <%= f.text_area :description %>
-    </div>
-    <div class="field">
-      <%= f.label :weight %><br>
-      <%= f.number_field :weight %>
-    </div>
-    <div class="actions hvr-sweep-to-right">
-      <%= f.submit %>
-    </div>
+  <% if @current_user_is_member %>
+    <h2>New metric</h2>
+    </br>
+    <%= form_for(Metric.new) do |f| %>
+      <div class="field">
+        <%= f.hidden_field :gallina_id, :value=> @gallina.id %>
+      </div>
+      <div class="field">
+        <%= f.label :name %><br>
+        <%= f.text_field :name %>
+      </div>
+      <div class="field">
+        <%= f.label :description %><br>
+        <%= f.text_area :description %>
+      </div>
+      <div class="field">
+        <%= f.label :weight %><br>
+        <%= f.number_field :weight %>
+      </div>
+      <div class="actions hvr-sweep-to-right">
+        <%= f.submit %>
+      </div>
+    <% end %>
   <% end %>
 
   <h3>Reviews</h3>
   <% @gallina.users.each do |reviewed| %>
   <h2><%=reviewed.email%> results</h2>
-    <a href="/gallinas/<%=@gallina.id%>/review_submission/<%=reviewed.id%>">Review <%= reviewed.email %></a>
+    <% if @current_user_is_member %>
+      <a href="/gallinas/<%=@gallina.id%>/review_submission/<%=reviewed.id%>">Review <%= reviewed.email %></a>
+    <% end %>
     <table border="2">
       <tr>
         <td>

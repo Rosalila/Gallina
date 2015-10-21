@@ -10,6 +10,10 @@ class GallinasController < ApplicationController
   # GET /gallinas/1
   # GET /gallinas/1.json
   def show
+    @current_user_is_member = false
+    if @gallina.users.include?(current_user)
+      @current_user_is_member = true
+    end
   end
 
   # GET /gallinas/new
