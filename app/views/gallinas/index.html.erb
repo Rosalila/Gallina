@@ -8,16 +8,14 @@
            <%#<a href="blog_single.html"><img src="images/bl.jpg" class="img-responsive" alt=""/></a>%>
         <div class="event">
           <h4><%= gallina.name %></h4>
-          <h6>Posted at <%= gallina.created_at %></h6>
+          <h6>Started at <%= gallina.created_at %></h6>
         </div>
         <p><%= gallina.description %></p>
         <%= link_to 'Read More', gallina, class: "hvr-sweep-to-right more" %>
-        <%= link_to 'Edit', edit_gallina_path(gallina), class: "hvr-sweep-to-right more" %>
-        <%= link_to 'Destroy', gallina, method: :delete, data: { confirm: 'Are you sure?' }, class: "hvr-sweep-to-right more" %>
         <div class="links">
           <ul class="blog-links">
-            <li><a href="#"><i class="blog_circle"><%= gallina.agreements.count %> </i><span>Agreements</span></a></li>
-            <li><a href="#"><i class="blog_circle"><%= gallina.metrics.count %> </i><span>Metrics</span></a></li>
+            <li><a href="#"><i class="blog_circle"><%= gallina.users.count %> </i><span>Members</span></a></li>
+            <li><a href="#"><i class="blog_circle"><%= gallina.reviews.count %> </i><span>Reviews</span></a></li>
           </ul>
         </div>
       

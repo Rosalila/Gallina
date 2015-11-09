@@ -31,9 +31,9 @@
                   <p><%= question.not_wanted_statement %></p>
                 </td>
                 <td>
-                  <% 10.times do |v| %>
+                  <% 11.times do |v| %>
                     <td>
-                      <i><%=v+1%></i></br>
+                      <i><%=v%></i></br>
                       <%= radio_button_tag "questions[#{question.id}]", v+1 %>
                     </td>
                   <% end %>

@@ -7,6 +7,14 @@
     <%= @gallina.description %>
   </p>
 
+  <% if @current_user_is_member %>
+    <div class="links">
+      <ul class="blog-links">
+        <li><a href="/gallinas/<%=@gallina.id%>/edit"><i class="glyphicon glyphicon-edit"> </i><span>Edit</span></a></li>
+      </ul>
+    </div>
+  <% end %>
+
   <h2>Users</h2>
   <%@gallina.users.each do |user|%>
     <%=user.email%>
@@ -168,6 +176,7 @@
   <% end %>
 
   <h3>Reviews</h3>
+  <% current_reviewed = 0 %>
   <% @gallina.users.each do |reviewed| %>
   <h2><%=reviewed.email%> results</h2>
     <% if @current_user_is_member %>
@@ -204,17 +213,14 @@
           <!-- Blank for total -->
         </td>
       </tr>
-      <% reviewed_global_table = Hash.new %>
-      <% current_reviewed = 0 %>
+      <% current_reviewer = 0 %>
       <% @gallina.users.each do |reviewer| %>
         <tr>
           <td>
             <%= reviewer.email %>
           </td>
           <% current_metric = 0 %>
-          <% reviewed_global_table[current_reviewed] = [] %>
           <% @gallina.metrics.each do |metric| %>
-            <%metric_total=0%>
             <% metric.questions.each do |question| %>
               <td>
                 <% reviewer_reviews = Review.where(:question_id=>question.id, :reviewer_id=>reviewer.id, :reviewed_id=>reviewed.id) %>
@@ -223,20 +229,18 @@
                   <% grade = reviewer_reviews.last.grade %>
                 <% end %>
                 <%= grade %>
-                <%metric_total+=grade%>
               </td>
             <% end %>
             <td>
-              <% reviewed_global_table[current_reviewed][current_metric]=metric_total/metric.questions.size.to_f %>
-              <i><%= reviewed_global_table[current_reviewed][current_metric] %></i>
+              <i><%= @reviewed_global_table[current_reviewed][current_reviewer][current_metric] %></i>
             </td>
             <% current_metric += 1 %>
           <% end %>
           <td>
-            <%= reviewed_global_table[current_reviewed].sum / reviewed_global_table[current_reviewed].size.to_f %>
+            <%= @reviewed_global_table[current_reviewed][current_reviewer].sum / @reviewed_global_table[current_reviewed][current_reviewer].size.to_f %>
           </td>
         </tr>
-        <% current_reviewed += 1 %>
+        <% current_reviewer += 1 %>
       <% end %>
       <tr>
         <td>
@@ -247,7 +251,7 @@
         <% @gallina.metrics.each do |metric| %>
           <% metric_total = 0 %>
           <% for current_reviewer in 0..@gallina.users.size-1 %>
-            <% metric_total+= reviewed_global_table[current_reviewer][current_metric] %>
+            <% metric_total+= @reviewed_global_table[current_reviewed][current_reviewer][current_metric] %>
           <% end %>
           <td colspan="<%= metric.questions.size+1 %>">
             <% metric_total/=@gallina.users.size %>
@@ -261,6 +265,7 @@
         <td>
       </tr>
     </table>
+    <% current_reviewed += 1 %>
   <% end %>
   </br>
 </div>
