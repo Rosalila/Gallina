@@ -34,7 +34,7 @@
                   <% 11.times do |v| %>
                     <td>
                       <i><%=v%></i></br>
-                      <%= radio_button_tag "questions[#{question.id}]", v+1 %>
+                      <%= radio_button_tag "questions[#{question.id}]", v %>
                     </td>
                   <% end %>
                 </td>
