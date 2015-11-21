@@ -410,7 +410,9 @@
         <% end %>
         <td>
           <%member_numbers.push([current_reviewed,reviewed_total/@gallina.metrics.size.to_f])%>
-          <b><%= '%.2f' % (reviewed_total/@gallina.metrics.size.to_f*member_multiplier[current_reviewer]) %></b>
+          <%if @gallina.metrics.size>0%>
+            <b><%= '%.2f' % (reviewed_total/@gallina.metrics.size.to_f*member_multiplier[current_reviewer]) %></b>
+          <%end%>
         <td>
       </tr>
     </table>
