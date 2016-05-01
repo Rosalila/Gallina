@@ -1,0 +1,13 @@
+<h2>Users</h2>
+<%@gallina.users.each do |user|%>
+  <%=user.email%> 
+  <% if @current_user_is_member %>
+    - <a href="/gallinas/<%=@gallina.id%>/review_submission/<%=user.id%>">Review</a>
+  <% end %>
+  </br>
+<%end%>
+<% if @current_user_is_member %>
+  <%= link_to "/gallinas/#{@gallina.id}/invite", class: "btn hvr-sweep-to-right" do %>
+    <i class="glyphicon glyphicon-plus"> </i>Invite
+  <%end%>
+<%end%>

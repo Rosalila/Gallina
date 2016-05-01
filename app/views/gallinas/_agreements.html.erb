@@ -1,0 +1,56 @@
+<h3>Agreements</h3>
+
+<div class="feedback-top">
+  <br>
+  <% @gallina.agreements.each do |agreement| %>
+    <hr>
+    <div class="event">
+      <h6>(<%= agreement.created_at %>)</h6>
+    </div>
+    
+    <br>
+    <%= agreement.statement %>
+    <br>
+    <br>
+    <% agreement.user_agreements.each do |user_agreement| %>
+      <%=user_agreement.user.email%>
+      <% if user_agreement.accepted==true %>
+        Accepted
+      <% else %>
+        Rejected
+      <% end %>
+      (<%=user_agreement.created_at%>)
+      <br>
+    <% end %>
+    <br>
+    <br>
+    <% if @current_user_is_member %>
+      <div class="links">
+        <ul class="blog-links">
+          <li><a href="/home/accept_agreement?agreement_id=<%=agreement.id%>&accepted=true"><i class="glyphicon glyphicon-ok"> </i><span>Accept</span></a></li>
+          <li><a href="/home/accept_agreement?agreement_id=<%=agreement.id%>&accepted=false"><i class="glyphicon glyphicon-remove"> </i><span>Reject</span></a></li>
+        </ul>
+      </div>
+    <% end %>
+    <br>
+  <% end %>
+  <hr>
+
+
+  <% if @current_user_is_member %>
+    <h2>New agreement</h2>
+    </br>
+    <%= form_for(Agreement.new) do |f| %>
+      <div class="field">
+        <%= f.hidden_field :gallina_id, :value=> @gallina.id %>
+      </div>
+      <div class="field">
+        <%= f.label :statement %><br>
+        <%= f.text_area :statement %>
+      </div>
+      <div class="actions hvr-sweep-to-right">
+        <%= f.submit %>
+      </div>
+    <% end %>
+  <% end %>
+
