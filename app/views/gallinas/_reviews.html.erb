@@ -1,8 +1,10 @@
   <h3>Reviews</h3>
+
+  <h2>Raw contribution table</h2>
   <% current_reviewed = 0 %>
   <% member_numbers=[] %>
   <% @gallina.users.each do |reviewed| %>
-  <h2><%=reviewed.email%> results</h2>
+  <h4><%=reviewed.email%> results</h4>
     <table border="2">
       <tr>
         <td>
@@ -91,6 +93,7 @@
   <% end %>
   </br>
 
+<h2>User weight</h2>
 
 <%member_numbers_total = 0%>
 <%member_numbers.each do |user_number|%>
@@ -142,10 +145,12 @@
   <% end %>
 </table>
 
+<br>
 
+  <h2>Weighted contribution table</h2>
   <% current_reviewed = 0 %>
   <% @gallina.users.each do |reviewed| %>
-  <h2><%=reviewed.email%> results</h2>
+  <h4><%=reviewed.email%> results</h4>
     <table border="2">
       <tr>
         <td>
