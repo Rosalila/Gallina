@@ -24,17 +24,47 @@ class GallinasController < ApplicationController
         current_metric = 0
         @reviewed_global_table[current_reviewed][current_reviewer] = []
         @gallina.metrics.each do |metric|#for each metric
-          metric_total=0
-          metric.questions.each do |question|#for each question
-            reviewer_reviews = Review.where(:question_id=>question.id, :reviewer_id=>reviewer.id, :reviewed_id=>reviewed.id)#get all reviews
-            grade = 0
-            if reviewer_reviews.size > 0
-              grade = reviewer_reviews.last.grade
+          if metric.metric_type.name == "Standard"
+            metric_total=0
+            metric.questions.each do |question|#for each question
+              reviewer_reviews = Review.where(:question_id=>question.id, :reviewer_id=>reviewer.id, :reviewed_id=>reviewed.id)#get all reviews
+              grade = 0
+              if reviewer_reviews.size > 0
+                grade = reviewer_reviews.last.grade
+              end
+              metric_total+=grade
             end
-            metric_total+=grade
+            @reviewed_global_table[current_reviewed][current_reviewer][current_metric]=metric_total/metric.questions.size.to_f
+            current_metric += 1
           end
-          @reviewed_global_table[current_reviewed][current_reviewer][current_metric]=metric_total/metric.questions.size.to_f
-          current_metric += 1
+        end
+        current_reviewer += 1
+      end
+      current_reviewed += 1
+    end
+
+    current_reviewed = 0
+    @reviewed_global_table_multiplier = Hash.new
+    @gallina.users.each do |reviewed|#for each user
+      current_reviewer = 0
+      @reviewed_global_table_multiplier[current_reviewed] = []
+      @gallina.users.each do |reviewer|#for each reviewer
+        current_metric = 0
+        @reviewed_global_table_multiplier[current_reviewed][current_reviewer] = []
+        @gallina.metrics.each do |metric|#for each metric
+          if metric.metric_type.name == "Multiplier"
+            metric_total=0
+            metric.questions.each do |question|#for each question
+              reviewer_reviews = Review.where(:question_id=>question.id, :reviewer_id=>reviewer.id, :reviewed_id=>reviewed.id)#get all reviews
+              grade = 0
+              if reviewer_reviews.size > 0
+                grade = reviewer_reviews.last.grade
+              end
+              metric_total+=grade
+            end
+            @reviewed_global_table_multiplier[current_reviewed][current_reviewer][current_metric]=metric_total/metric.questions.size.to_f
+            current_metric += 1
+          end
         end
         current_reviewer += 1
       end

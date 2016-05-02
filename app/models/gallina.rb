@@ -17,4 +17,24 @@ class Gallina < ActiveRecord::Base
     return result
   end
 
+  def standardMetrics
+    result = []
+    metrics.each do |metric|
+      if metric.metric_type.name == "Standard"
+        result.push(metric)
+      end
+    end
+    return result
+  end
+
+  def multiplierMetrics
+    result = []
+    metrics.each do |metric|
+      if metric.metric_type.name == "Multiplier"
+        result.push(metric)
+      end
+    end
+    return result
+  end
+
 end

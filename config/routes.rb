@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :metric_types
   resources :reviews
   get 'gallinas/:id/invite' => 'gallinas#invite', as: :invite
   post 'gallinas/reviewed' => 'gallinas#reviewed', as: :reviewed

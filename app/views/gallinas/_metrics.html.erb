@@ -3,9 +3,9 @@
   <% @gallina.metrics.each do |metric| %>
     <div class="panel panel-success">
       <div class="panel-heading">
-        <label class="panel-title"><%= metric.name %></label>
-        <p>Description: <%= metric.description %></p>
-        <span>(weight: <%= metric.weight %>)</span>
+        <label class="panel-title"><%= metric.name %> </label><span> <%= metric.description %></span>
+        <p>Weight: <%= metric.weight %></p>
+        <p>Type: <%= metric.metric_type.name %></p>
       </div>
       <div class="panel-body">
         <h4>Questions</h4>
@@ -79,6 +79,10 @@
       <div class="field">
         <%= f.label :weight %><br>
         <%= f.number_field :weight %>
+      </div>
+      <div class="field">
+        <%= f.label :type %><br>
+        <%= f.collection_select(:metric_type_id, MetricType.all, :id, :name)%>
       </div>
       <div class="actions hvr-sweep-to-right">
         <%= f.submit %>
