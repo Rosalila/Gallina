@@ -256,6 +256,7 @@
   <% current_reviewed = 0 %>
   <% member_numbers=[] %>
   <% @gallina.users.each do |reviewed| %>
+  <% current_table_totals = [] %>
   <h4><%=reviewed.email%> results</h4>
     <table border="2">
       <tr>
@@ -314,6 +315,7 @@
           <% end %>
           <td>
             <%= '%.2f' % (@reviewed_global_table_multiplier[current_reviewed][current_reviewer].sum / @reviewed_global_table_multiplier[current_reviewed][current_reviewer].size.to_f*member_multiplier[current_reviewer]) %>
+<% current_table_totals.push(@reviewed_global_table_multiplier[current_reviewed][current_reviewer].sum / @reviewed_global_table_multiplier[current_reviewed][current_reviewer].size.to_f*member_multiplier[current_reviewer]) %>
           </td>
         </tr>
         <% current_reviewer += 1 %>
@@ -324,23 +326,16 @@
         </td>
         <% reviewed_total = 0 %>
         <% current_metric = 0 %>
+
         <% @gallina.multiplierMetrics.each do |metric| %>
-          <% metric_total = 0 %>
-          <% for current_reviewer in 0..@gallina.users.size-1 %>
-            <% metric_total+= @reviewed_global_table_multiplier[current_reviewed][current_reviewer][current_metric] %>
-          <% end %>
           <td colspan="<%= metric.questions.size+1 %>">
-            <% metric_total/=@gallina.users.size %>
-            <%= '%.2f' % (metric_total*member_multiplier[current_reviewer]) %>
           </td>
-          <% reviewed_total += metric_total %>
-          <% current_metric+=1 %>
         <% end %>
         <td>
-          <%if @gallina.multiplierMetrics.size>0%>
-            <%member_numbers.push(reviewed_total/@gallina.multiplierMetrics.size.to_f*member_multiplier[current_reviewer])%>
-            <b><%= '%.2f' % (reviewed_total/@gallina.multiplierMetrics.size.to_f*member_multiplier[current_reviewer]) %></b>
-          <%end%>
+          <% if current_table_totals %>
+            <b><%=current_table_totals.reduce(:+).to_f / current_table_totals.size%></b>
+            <%member_numbers.push(current_table_totals.reduce(:+).to_f / current_table_totals.size)%>
+          <% end %>
         <td>
       </tr>
     </table>
