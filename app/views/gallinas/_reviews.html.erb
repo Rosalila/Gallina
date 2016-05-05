@@ -421,15 +421,15 @@
   <% member_numbers_total+=user_number %>
 <%end%>
 
-<% member_percentage = []%>
-<%member_numbers.each do |user_number|%>
-  <%member_percentage.push(user_number/member_numbers_total)%>
-<%end%>
-
 <% member_multiplier = []%>
 <%member_numbers.each do |user_number|%>
   <%member_multiplier.push((user_number/member_numbers_total)*member_numbers.size)%>
 <%end%>
+
+<%final_table_raw=[]%>
+<% for i in 0..member_multiplier.size-1 %>
+  <% final_table_raw.push(member_multiplier[i]*final_weight[i]) %>
+<% end %>
 
 <table border="2">
   <tr>
@@ -437,7 +437,10 @@
       Email
     </td>
     <td>
-      Final	
+      Final	raw value
+    </td>
+    <td>
+      Final	percentage
     </td>
   </tr>
   <%i=0%>
@@ -448,7 +451,10 @@
         <%= reviewed.email %>
       </td>
       <td>
-        <%= '%.2f' % (member_multiplier[i]*final_weight[i]) %>
+        <%= '%.2f' % (final_table_raw[i]) %>
+      </td>
+      <td>
+        <%= '%.2f' % (final_table_raw[i]/final_table_raw.inject(0, :+))%>
       </td>
     </tr>
     <%end%>
